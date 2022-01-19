@@ -1,0 +1,168 @@
+ALGORITHM:
+
+First Fit:
+ 
+
+	•	Input memory blocks with size and processes with sizes.
+	•	Initialize all memory blocks as free.
+	•	Start by picking each process and check if it can be assigned to current block.
+	•	If size_of_process <= size_of_block if yes then assign and check for next process.
+	•	If not then keep checking the further blocks.
+
+
+
+
+Best Fit:
+ 
+
+	•	Input memory blocks and processes with sizes.
+	•	Initialize all memory blocks as free.
+	•	Start by picking each process and find the minimum block size that can be assigned to current process i.e., find min(blocks[1], blocks[2],.....blocks[n]) > jobs[current], if found then assign it to the current process.
+	•	If not then leave that process and keep checking the further processes.
+
+
+
+Worst Fit:
+	•	Input memory blocks and processes with sizes.
+	•	Initialize all memory blocks as free.
+	•	Start by picking each process and find the maximum block size that can be assigned to current process i.e., find max(blocks[1], blocks[2],	blocks[n]) > jobs[current], if found then assign it to
+the current process.
+	•	If not then leave that process and keep checking the further processes.
+
+
+
+
+PROGRAM:
+
+//Memory management schemes
+
+
+#include<stdio.h>
+
+
+int flag[30];
+
+
+int firstfit(int m,int n,int blocks[30],int jobs[30])
+{
+int i,j,c,ws;
+
+
+for(i=1;i<=n;i++) flag[i]=0;
+
+printf("FIRST FIT :\n"); for(i=1;i<=m;i++)
+{
+c=0;
+for(j=1;j<=n;j++)
+{
+if((jobs[i]<=blocks[j]) && (flag[j]==0))
+{
+ws=blocks[j]-jobs[i];
+printf("Job%d placed in block%d\tWaste space : %d\n",i,j,ws); flag[j]=1;
+c++;
+
+break;
+}
+}
+if(c==0)
+printf("Job%d cannot be placed\n",i);
+}
+
+
+return 0;
+}
+
+
+int bestfit(int m,int n,int blocks[30],int jobs[30])
+{
+int i,j,k,c,ws,min,temp=-1;
+
+
+for(i=1;i<=n;i++) flag[i]=0;
+
+printf("BEST FIT :\n"); for(i=1;i<=m;i++)
+{
+c=0; min=99999;
+for(j=1;j<=n;j++)
+{
+if((jobs[i]<=blocks[j]) && (flag[j]==0))
+{
+ws=blocks[j]-jobs[i]; if(ws<min)
+{
+min=ws; temp=j;
+}
+c++;
+}
+}
+if(c==0)
+printf("Job%d cannot be placed\n",i); if(c>=1)
+{
+flag[temp]=1;
+printf("Job%d placed in block%d\tWaste space :
+%d\n",i,temp,min);
+}
+}
+return 0;
+}
+
+
+int worstfit(int m,int n,int blocks[30],int jobs[30])
+{
+int i,j,k,c,ws,max,temp=-1;
+
+
+
+for(i=1;i<=n;i++) flag[i]=0;
+
+printf("WORST FIT :\n"); for(i=1;i<=m;i++)
+{
+c=0;
+max=-99999;
+for(j=1;j<=n;j++)
+{
+if((jobs[i]<=blocks[j]) && (flag[j]==0))
+{
+ws=blocks[j]-jobs[i]; if(ws>max)
+{
+max=ws; temp=j;
+} c++;
+}
+}
+if(c==0)
+printf("Job%d cannot be placed\n",i); if(c>=1)
+
+{
+flag[temp]=1;
+printf("Job%d placed in block%d\tWaste space :
+%d\n",i,temp,max);
+}
+}
+return 0;
+}
+
+int main()
+{
+int i,m,n,jobs[30],blocks[30];
+
+
+printf("Enter the no. of blocks : "); scanf("%d",&m);
+printf("Enter the no. of jobs : "); scanf("%d",&n);
+
+printf("Enter the size of each blocks : "); for(i=1;i<=m;i++) scanf("%d",&blocks[i]);
+
+printf("Enter the size of each jobs : "); for(i=1;i<=n;i++)
+scanf("%d",&jobs[i]);
+
+
+printf("\n"); firstfit(m,n,blocks,jobs);
+printf("\n"); bestfit(m,n,blocks,jobs);
+printf("\n"); worstfit(m,n,blocks,jobs);
+
+return 0;
+}
+printf("\n"); firstfit(m,n,blocks,jobs);
+printf("\n"); bestfit(m,n,blocks,jobs);
+printf("\n"); worstfit(m,n,blocks,jobs);
+
+return 0;
+}
